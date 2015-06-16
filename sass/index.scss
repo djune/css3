@@ -1,0 +1,56 @@
+@import"compass/reset";
+
+body{
+	padding: 50px 0 0 0;
+}
+
+$browsePrefix: -webkit-, -moz-, -o-, -ms-, '' !default;
+
+@mixin propertySupport($prop,$val){
+	@each $prefix in $browsePrefix{
+		#{$prefix}#{$prop}:#{$val};
+	}
+}
+
+@mixin rotate($deg) {
+	@include propertySupport('transform','rotate('+$deg+')');
+}
+
+@mixin skew($deg){
+	@include propertySupport('transform','skew('+$deg+')');
+}
+
+@mixin keyframes($name){
+	@each $prefix in $browsePrefix{
+		@keyframes #{$name}{
+			@content;
+		}
+	}
+}
+
+.block{
+	border:1px solid red;
+	padding :10px;
+	margin:20px auto;
+	width:100px;
+}
+
+.rotate {
+	@include rotate(10deg);
+	@include propertySupport('animation','myfirst 5s');
+	text-indent:360px;
+} 
+
+.skew{
+	@include skew(20deg);
+}
+
+@include keyframes('first'){
+	from{
+		background: red;
+	}
+	to{
+		background: yellow;
+	}
+}
+
